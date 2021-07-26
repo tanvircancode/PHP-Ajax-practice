@@ -1,3 +1,6 @@
 <?php
-echo "nice";
-echo json_encode( $_GET, JSON_PRETTY_PRINT );
+// echo "morning";
+$data = $_REQUEST;
+$data['result'] = 'perfect';
+$data['method'] = $_SERVER['REQUEST_METHOD'];
+echo json_encode( $data, JSON_PRETTY_PRINT );

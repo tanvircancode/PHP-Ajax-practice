@@ -41,12 +41,19 @@
 
       function sendData(){
           let xhr = new XMLHttpRequest();
-          xhr.open("GET","data.php?foo=bar&hello=world",true);
+          xhr.open("PUT","data.php?id=12&name=Robin&email=x@email.com",true);
+
+        //   xhr.setRequestHeader("Content-Type" , "application/x-www-form-urlencoded"); for POST method
           xhr.onreadystatechange = function(){
               if(this.readyState===4 && this.status===200){
-                  console.log(this.responseText);
+                //   console.log(this.responseText);
+                document.getElementById('result').innerHTML = this.responseText;
+
+                  var response = JSON.parse(this.responseText);
+                  console.log(response);
               }
           }
+        // xhr.send("how=love&hello=world");  for POST method
         xhr.send();
       }
 
