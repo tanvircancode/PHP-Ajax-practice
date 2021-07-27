@@ -59,8 +59,20 @@
 
       document.getElementById('send').addEventListener('click', function(){
         //  console.log("clicked");
-        sendData();
+        // sendData();
+        let params = {
+            "key1" : "value 1",
+            "key2" : "value 2",
+            "key3" : "value 3,4,5 and more"
+        }
+      console.log(formatParams(params));
       });
+
+      function formatParams(data){
+        return Object.keys(data).map(function(key){
+            return key + "=" + encodeURIComponent(data[key]);
+        }).join('&');
+      }
 
   </script>
 </html>
