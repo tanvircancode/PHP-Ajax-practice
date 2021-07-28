@@ -40,10 +40,18 @@
   <script>
 
       function sendData(){
-          let xhr = new XMLHttpRequest();
-          xhr.open("PUT","data.php?id=12&name=Robin&email=x@email.com",true);
+        let params = {
+            "key1" : "value 1",
+            "key2" : "value 2",
+            "key3" : "value 3,4,5 and more"
+        }
 
-        //   xhr.setRequestHeader("Content-Type" , "application/x-www-form-urlencoded"); for POST method
+        var queryString = formatParams(params);
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST","data.php",true);
+
+          xhr.setRequestHeader("Content-Type" , "application/x-www-form-urlencoded"); //for POST method
           xhr.onreadystatechange = function(){
               if(this.readyState===4 && this.status===200){
                 //   console.log(this.responseText);
@@ -54,24 +62,53 @@
               }
           }
         // xhr.send("how=love&hello=world");  for POST method
-        xhr.send();
+        xhr.send(queryString);
       }
 
       document.getElementById('send').addEventListener('click', function(){
         //  console.log("clicked");
         // sendData();
-        let params = {
-            "key1" : "value 1",
-            "key2" : "value 2",
-            "key3" : "value 3,4,5 and more"
-        }
-      console.log(formatParams(params));
+        sendDataUsingjQuery();
+
+    //   console.log(formatParams(params));
       });
 
       function formatParams(data){
-        return Object.keys(data).map(function(key){
-            return key + "=" + encodeURIComponent(data[key]);
-        }).join('&');
+          return new URLSearchParams(data).toString();
+
+          //below code works same as the above 1 line code
+        // return Object.keys(data).map(function(key){
+        //     return key + "=" + encodeURIComponent(data[key]);
+        // }).join('&');
+      }
+
+      function sendDataUsingjQuery(){
+        let params = {
+            "key1" : "value 1",
+            "key2" : "value 2",
+            "key3" : "value 3,4,5 and more",
+            "sender": "jQuery"
+        }
+
+        //most common generic form
+        $.ajax({
+            "method" : "POST",
+            "data" : params,
+            "url" : "data.php",
+            success : function(html){
+                $("#result").text(html);
+            }
+        })
+        //below 3 line of code is equivalent to success code
+        // .done(function(response){
+        //     $('#result').html(response);
+        // });
+
+
+        //by using post/get method
+        // $.post("data.php",params,function(response){
+        //     $("#result").html(response);
+        // })
       }
 
   </script>
