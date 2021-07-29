@@ -64,14 +64,47 @@
 
                 </form>
             </div>
+            <!-- <div class="col-md-8 data-value">
+                <pre id="result"></pre>
+            </div> -->
         </div>
+
     </div>
+
 <!-- Default form register -->
 
 <!-- Default form register -->
 </body>
 <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
-    
+
+   (function($){
+       $(document).ready(function(){
+        $("#send").click(function(){
+            let params = {
+                "first-name" : $("#first-name").val(),
+                "last-name" : $("#last-name").val(),
+                "email" : $("#email").val(),
+                "password" : $("#password").val(),
+                "phone" : $("#phone").val(),
+
+            }
+            $.ajax({
+                "method" : "POST",
+                "url" : "data.php",
+                "data" : params,
+                success : function(html){
+                    console.log(html);
+                    // $("#result").text(html);
+                }
+            })
+            return false;
+        })
+       });
+   })(jQuery);
+
+
+
+
 </script>
 </html>
